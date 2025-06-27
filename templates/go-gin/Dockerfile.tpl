@@ -1,0 +1,1 @@
+../common/Dockerfile.go-gin.tpl

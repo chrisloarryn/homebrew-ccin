@@ -1,0 +1,1 @@
+../common/Makefile.go-gin.tpl
