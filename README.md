@@ -467,7 +467,7 @@ import _ "github.com/chrisloarryn/chrisloarryn-cli/internal/generators/my-framew
 
 ### 🔄 In Development (v1.1)
 - [ ] **Python Support**: FastAPI with async/await
-- [ ] **Rust Support**: Actix Web framework
+- 🔄 **Rust Support**: Rocket Web framework (In Progress)
 - [ ] **Interactive CLI**: Wizard for project configuration
 - [ ] **Custom Templates**: User template customization
 
