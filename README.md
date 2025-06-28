@@ -1,4 +1,4 @@
-# ChrisLoarryn CLI (### From source code
+# CCIN CLI (### From source code to run directly)
 
 ```bash
 git clone https://github.com/chrisloarryn/homebrew-ccin
