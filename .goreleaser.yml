@@ -45,7 +45,6 @@ builds:
 
 archives:
   - id: ccin
-    format: tar.gz
     # this name template makes the OS and Arch compatible with the results of uname.
     name_template: >-
       {{ .ProjectName }}_
@@ -54,10 +53,6 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
-    format_overrides:
-      - goos: windows
-        format: zip
     files:
       - README.md
       - LICENSE*
@@ -66,7 +61,7 @@ checksum:
   name_template: 'checksums.txt'
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  version_template: "{{ incpatch .Version }}-next"
 
 changelog:
   sort: asc
@@ -161,28 +156,6 @@ release:
     
     ### 📋 Full Documentation
     See the [README.md](https://github.com/chrisloarryn/homebrew-ccin/blob/main/README.md) for complete documentation.
-
-# Homebrew tap
-brews:
-  - name: ccin
-    repository:
-      owner: chrisloarryn
-      name: homebrew-ccin
-      branch: main
-    directory: Formula
-    homepage: https://github.com/chrisloarryn/homebrew-ccin
-    description: An advanced CLI for generating CRUD applications with modular architecture
-    license: MIT
-    test: |
-      system "#{bin}/ccin --help"
-    dependencies:
-      - name: git
-        type: optional
-    install: |-
-      bin.install "ccin"
-      
-      # Install completion scripts
-      generate_completions_from_executable(bin/"ccin", "completion")
 
 # Universal macOS binaries
 universal_binaries:
