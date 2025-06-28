@@ -190,6 +190,8 @@ dockers:
       - "chrisloarryn/ccin:v{{ .Major }}.{{ .Minor }}"
     dockerfile: Dockerfile
     use: buildx
+    extra_files:
+      - templates/
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{.Date}}"
