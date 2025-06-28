@@ -16,8 +16,6 @@ on:
 permissions:
   contents: write
   packages: write
-  actions: write
-  metadata: read
 
 jobs:
   goreleaser:
