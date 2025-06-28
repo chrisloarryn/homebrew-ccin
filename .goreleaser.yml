@@ -161,6 +161,29 @@ release:
 universal_binaries:
   - replace: true
 
+# Homebrew casks (modern approach for GoReleaser v2)
+homebrew_casks:
+  - name: ccin
+    repository:
+      owner: chrisloarryn
+      name: homebrew-ccin
+      branch: main
+    homepage: https://github.com/chrisloarryn/homebrew-ccin
+    description: An advanced CLI for generating CRUD applications with modular architecture
+    caveats: |
+      After installation, you can use ccin to generate CRUD applications:
+        ccin generate nestjs my-api --domain user
+        ccin generate go-gin my-gin-api --domain product --grpc
+        ccin generate go-fiber my-fiber-api --domain order
+    
+    # Post-install hook to remove quarantine (for unsigned binaries)
+    hooks:
+      post:
+        install: |
+          if system_command("/usr/bin/xattr", args: ["-h"]).exit_status == 0
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ccin"]
+          end
+
 # Windows MSI installer (optional)
 nfpms:
   - id: ccin
