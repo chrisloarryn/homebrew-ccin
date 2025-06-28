@@ -2,7 +2,7 @@
 cask "ccin" do
   desc "An advanced CLI for generating CRUD applications with modular architecture"
   homepage "https://github.com/chrisloarryn/homebrew-ccin"
-  version "0.0.8"
+  version "0.0.10"
 
   livecheck do
     skip "Auto-generated on release."
@@ -11,18 +11,18 @@ cask "ccin" do
   binary "ccin"
 
   on_macos do
-    url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.8/ccin_Darwin_all.tar.gz"
-    sha256 "b7e70010a0fb1a064ba057d9cf42a9155d3b5f618122ac1591aa7fde8b7f5a17"
+    url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.10/ccin_Darwin_all.tar.gz"
+    sha256 "303b42be6c1a9a37f306f524936a16f081c4dd295184ba362a97d90b70013811"
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.8/ccin_Linux_x86_64.tar.gz"
-      sha256 "1e336f3a371779f084a8a30e033dd1f75088f0234bc07f3c5529450a1662f1a4"
+      url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.10/ccin_Linux_x86_64.tar.gz"
+      sha256 "486e67c476b548725c642fe224e41d370eed4a671edcd487b82c866b3335c881"
     end
     on_arm do
-      url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.8/ccin_Linux_arm64.tar.gz"
-      sha256 "b8fc3a95d66ff79c472e487ba1fb9f92b39556832cba02b721cb61a57c29cdd6"
+      url "https://github.com/chrisloarryn/homebrew-ccin/releases/download/v0.0.10/ccin_Linux_arm64.tar.gz"
+      sha256 "f17bf6cd04f61ac0ed6880fe4f828aeae787171014b1be8a1770e4f0fd583c2e"
     end
   end
 
