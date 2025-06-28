@@ -84,22 +84,22 @@ jobs:
       - name: Descargar y probar (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          curl -sSL "https://github.com/${{ github.repository }}/releases/download/${TAG}/gos_Linux_x86_64.tar.gz" | tar -xz
-          chmod +x gos
-          ./gos --help
+          curl -sSL "https://github.com/${{ github.repository }}/releases/download/${TAG}/ccin_Linux_x86_64.tar.gz" | tar -xz
+          chmod +x ccin
+          ./ccin --help
 
       - name: Descargar y probar (macOS)
         if: matrix.os == 'macos-latest'
         run: |
-          curl -sSL "https://github.com/${{ github.repository }}/releases/download/${TAG}/gos_Darwin_all.tar.gz" | tar -xz
-          chmod +x gos
-          ./gos --help
+          curl -sSL "https://github.com/${{ github.repository }}/releases/download/${TAG}/ccin_Darwin_all.tar.gz" | tar -xz
+          chmod +x ccin
+          ./ccin --help
 
       - name: Descargar y probar (Windows)
         if: matrix.os == 'windows-latest'
         shell: pwsh
         run: |
           $tag = "${{ env.TAG }}"
-          Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/$tag/gos_Windows_x86_64.zip" -OutFile "gos.zip"
-          Expand-Archive -Path "gos.zip" -DestinationPath "."
-          .\gos.exe --help
+          Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/$tag/ccin_Windows_x86_64.zip" -OutFile "ccin.zip"
+          Expand-Archive -Path "ccin.zip" -DestinationPath "."
+          .\ccin.exe --help

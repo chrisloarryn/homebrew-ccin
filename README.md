@@ -1,6 +1,16 @@
-# ChrisLoarryn CLI
+# ChrisLoarryn CLI (### From source code
 
-An advanced and powerful CLI for generating CRUD applications with modular architecture, template-based approach and support for multiple modern frameworks.
+```bash
+git clone https://github.com/chrisloarryn/homebrew-ccin
+cd homebrew-ccin
+go build -o ccin .
+```
+
+### Run directly
+
+```bash
+go run main.go [command]
+```anced and powerful CLI for generating CRUD applications with modular architecture, template-based approach and support for multiple modern frameworks.
 
 ## Features
 
@@ -21,9 +31,9 @@ An advanced and powerful CLI for generating CRUD applications with modular archi
 ### From source code
 
 ```bash
-git clone https://github.com/chrisloarryn/chrisloarryn-cli
-cd chrisloarryn-cli
-go build -o chrisloarryn-cli .
+git clone https://github.com/chrisloarryn/ccin
+cd ccin
+go build -o ccin .
 ```
 
 ### Run directly
@@ -38,22 +48,22 @@ go run main.go [command]
 
 ```bash
 # Show general help
-./chrisloarryn-cli --help
+./ccin --help
 
 # Show generation help
-./chrisloarryn-cli generate --help
+./ccin generate --help
 
 # Generate NestJS project with Node.js 24.2.0
-./chrisloarryn-cli generate nestjs my-nestjs-api --domain user --gcp-project my-project
+./ccin generate nestjs my-nestjs-api --domain user --gcp-project my-project
 
 # Generate Go project with Gin (with optional gRPC)
-./chrisloarryn-cli generate go-gin my-gin-api --domain product --gcp-project my-project --grpc
+./ccin generate go-gin my-gin-api --domain product --gcp-project my-project --grpc
 
 # Generate Go project with Fiber (with optional gRPC)
-./chrisloarryn-cli generate go-fiber my-fiber-api --domain order --gcp-project my-project --grpc
+./ccin generate go-fiber my-fiber-api --domain order --gcp-project my-project --grpc
 
 # Example without GCP (basic functionality only)
-./chrisloarryn-cli generate nestjs simple-api --domain item
+./ccin generate nestjs simple-api --domain item
 ```
 
 ### Global Parameters
@@ -271,25 +281,25 @@ Each project includes commands for:
 ### E-commerce Project
 ```bash
 # Users API
-./chrisloarryn-cli generate nestjs ecommerce-users --domain user --gcp-project ecommerce-prod
+./ccin generate nestjs ecommerce-users --domain user --gcp-project ecommerce-prod
 
 # Products API
-./chrisloarryn-cli generate go-gin ecommerce-products --domain product --gcp-project ecommerce-prod --grpc
+./ccin generate go-gin ecommerce-products --domain product --gcp-project ecommerce-prod --grpc
 
 # Orders API
-./chrisloarryn-cli generate go-fiber ecommerce-orders --domain order --gcp-project ecommerce-prod
+./ccin generate go-fiber ecommerce-orders --domain order --gcp-project ecommerce-prod
 ```
 
 ### Microservices Project
 ```bash
 # Authentication service
-./chrisloarryn-cli generate nestjs auth-service --domain auth --gcp-project microservices-dev
+./ccin generate nestjs auth-service --domain auth --gcp-project microservices-dev
 
 # Inventory service
-./chrisloarryn-cli generate go-gin inventory-service --domain item --gcp-project microservices-dev --grpc
+./ccin generate go-gin inventory-service --domain item --gcp-project microservices-dev --grpc
 
 # Notifications service
-./chrisloarryn-cli generate go-fiber notification-service --domain notification --gcp-project microservices-dev
+./ccin generate go-fiber notification-service --domain notification --gcp-project microservices-dev
 ```
 
 ## 🚀 Production Best Practices
@@ -360,7 +370,7 @@ When you specify `--gcp-project`, the project includes:
 The CLI now uses a completely modular and extensible architecture:
 
 ```
-chrisloarryn-cli/
+ccin/
 ├── cmd/
 │   ├── root.go                   # Root command
 │   └── generate.go               # Generate command with subcommands
@@ -388,7 +398,7 @@ chrisloarryn-cli/
 // internal/generators/my-framework/generator.go
 package myframework
 
-import "github.com/chrisloarryn/chrisloarryn-cli/internal/common"
+import "github.com/chrisloarryn/ccin/internal/common"
 
 type Generator struct {
     *common.BaseGenerator
@@ -442,7 +452,7 @@ var myFrameworkCmd = &cobra.Command{
 **4. Import the Generator:**
 ```go
 // In cmd/generate.go
-import _ "github.com/chrisloarryn/chrisloarryn-cli/internal/generators/my-framework"
+import _ "github.com/chrisloarryn/ccin/internal/generators/my-framework"
 ```
 
 ## Contributing
@@ -488,7 +498,7 @@ ChrisLoarryn CLI uses a modular, template-based architecture that makes it easy 
 ### Project Structure
 
 ```
-chrisloarryn-cli/
+ccin/
 ├── cmd/                          # CLI commands
 │   ├── root.go                   # Root command
 │   └── generate.go               # Generate command with subcommands

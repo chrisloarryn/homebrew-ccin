@@ -46,23 +46,23 @@ jobs:
 
     - name: Build (Unix)
       if: runner.os != 'Windows'
-      run: go build -v -o gos main.go
+      run: go build -v -o ccin main.go
 
     - name: Build (Windows)
       if: runner.os == 'Windows'
-      run: go build -v -o gos.exe main.go
+      run: go build -v -o ccin.exe main.go
 
     - name: Test binary (Unix)
       if: runner.os != 'Windows'
       run: |
-        ./gos --help
-        ./gos help
+        ./ccin --help
+        ./ccin help
 
     - name: Test binary (Windows)
       if: runner.os == 'Windows'
       run: |
-        .\gos.exe --help
-        .\gos.exe help
+        .\ccin.exe --help
+        .\ccin.exe help
 
     - name: Upload coverage to Codecov
       if: matrix.os == 'ubuntu-latest' && matrix.go-version == '1.21'

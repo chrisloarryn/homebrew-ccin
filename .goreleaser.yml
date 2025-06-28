@@ -1,9 +1,9 @@
-# GoReleaser configuration for GOS CLI
+# GoReleaser configuration for ChrisLoarryn CLI
 # See: https://goreleaser.com
 
 version: 2
 
-project_name: ccinit
+project_name: chrisloarryn-cli
 
 before:
   hooks:
@@ -13,9 +13,9 @@ before:
     - go generate ./...
 
 builds:
-  - id: gos
+  - id: ccin
     main: ./main.go
-    binary: gos
+    binary: ccin
     env:
       - CGO_ENABLED=0
     goos:
@@ -44,7 +44,7 @@ builds:
       - -trimpath
 
 archives:
-  - id: gos
+  - id: ccin
     format: tar.gz
     # this name template makes the OS and Arch compatible with the results of uname.
     name_template: >-
@@ -61,8 +61,6 @@ archives:
     files:
       - README.md
       - LICENSE*
-      - RESUMEN.md
-      - example-usage.sh
 
 checksum:
   name_template: 'checksums.txt'
@@ -118,9 +116,9 @@ release:
   name_template: "{{.ProjectName}} v{{.Version}}"
   # You can change the name of the release.
   header: |
-    ## 🚀 GOS CLI v{{.Version}}
+    ## 🚀 ChrisLoarryn CLI v{{.Version}}
     
-    A comprehensive Go version manager CLI built with Cobra.
+    An advanced and powerful CLI for generating CRUD applications with modular architecture.
     
     ### 📦 What's New in This Release
     
@@ -131,16 +129,16 @@ release:
     #### Using curl (recommended):
     ```bash
     # macOS (Intel)
-    curl -sSL https://github.com/chrisloarryn/homebrew-ccinit/releases/download/v{{.Version}}/gos_Darwin_x86_64.tar.gz | tar -xz && sudo mv gos /usr/local/bin/
+    curl -sSL https://github.com/chrisloarryn/homebrew-ccin/releases/download/v{{.Version}}/ccin_Darwin_x86_64.tar.gz | tar -xz && sudo mv ccin /usr/local/bin/
     
     # macOS (Apple Silicon)
-    curl -sSL https://github.com/chrisloarryn/homebrew-ccinit/releases/download/v{{.Version}}/gos_Darwin_arm64.tar.gz | tar -xz && sudo mv gos /usr/local/bin/
+    curl -sSL https://github.com/chrisloarryn/homebrew-ccin/releases/download/v{{.Version}}/ccin_Darwin_arm64.tar.gz | tar -xz && sudo mv ccin /usr/local/bin/
     
     # Linux (x86_64)
-    curl -sSL https://github.com/chrisloarryn/homebrew-ccinit/releases/download/v{{.Version}}/gos_Linux_x86_64.tar.gz | tar -xz && sudo mv gos /usr/local/bin/
+    curl -sSL https://github.com/chrisloarryn/homebrew-ccin/releases/download/v{{.Version}}/ccin_Linux_x86_64.tar.gz | tar -xz && sudo mv ccin /usr/local/bin/
     
     # Linux (ARM64)
-    curl -sSL https://github.com/chrisloarryn/homebrew-ccinit/releases/download/v{{.Version}}/gos_Linux_arm64.tar.gz | tar -xz && sudo mv gos /usr/local/bin/
+    curl -sSL https://github.com/chrisloarryn/homebrew-ccin/releases/download/v{{.Version}}/ccin_Linux_arm64.tar.gz | tar -xz && sudo mv ccin /usr/local/bin/
     ```
     
     #### Manual download:
@@ -148,45 +146,43 @@ release:
     
     ### 🚀 Quick Start
     ```bash
-    # Setup the Go version manager
-    gos setup
+    # Generate a NestJS project
+    ccin generate nestjs my-api --domain user
     
-    # Reload your shell
-    source ~/.zshrc
+    # Generate a Go Gin project with gRPC
+    ccin generate go-gin my-gin-api --domain product --grpc
     
-    # Install and use Go 1.21.5
-    gos install 1.21.5
-    gos use 1.21.5
+    # Generate a Go Fiber project
+    ccin generate go-fiber my-fiber-api --domain order
     
-    # Check status
-    gos status
+    # Show help
+    ccin --help
     ```
     
     ### 📋 Full Documentation
-    See the [README.md](https://github.com/chrisloarryn/homebrew-ccinit/blob/main/README.md) for complete documentation.
+    See the [README.md](https://github.com/chrisloarryn/homebrew-ccin/blob/main/README.md) for complete documentation.
 
 # Homebrew tap
 brews:
-  - name: gos
+  - name: ccin
     repository:
       owner: chrisloarryn
-      name: homebrew-gos
+      name: homebrew-ccin
       branch: main
     directory: Formula
-    homepage: https://github.com/chrisloarryn/homebrew-ccinit
-    description: A comprehensive Go version manager CLI
+    homepage: https://github.com/chrisloarryn/homebrew-ccin
+    description: An advanced CLI for generating CRUD applications with modular architecture
     license: MIT
     test: |
-      system "#{bin}/gos --help"
+      system "#{bin}/ccin --help"
     dependencies:
-      - name: curl
       - name: git
         type: optional
     install: |-
-      bin.install "gos"
+      bin.install "ccin"
       
       # Install completion scripts
-      generate_completions_from_executable(bin/"gos", "completion")
+      generate_completions_from_executable(bin/"ccin", "completion")
 
 # Universal macOS binaries
 universal_binaries:
@@ -194,33 +190,31 @@ universal_binaries:
 
 # Windows MSI installer (optional)
 nfpms:
-  - id: gos
-    package_name: gos
+  - id: ccin
+    package_name: ccin
     file_name_template: >-
       {{- trimsuffix .ConventionalFileName .ConventionalExtension -}}
       {{- if and (eq .Arm "6") (eq .ConventionalExtension ".deb") }}6{{ end -}}
       {{- if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end -}}
       {{- .ConventionalExtension -}}
     vendor: Cristobal Contreras
-    homepage: https://github.com/chrisloarryn/homebrew-ccinit
+    homepage: https://github.com/chrisloarryn/homebrew-ccin
     maintainer: Cristobal Contreras <email@example.com>
-    description: A comprehensive Go version manager CLI
+    description: An advanced CLI for generating CRUD applications with modular architecture
     license: MIT
     formats:
       - deb
       - rpm
-    dependencies:
-      - curl
     recommends:
       - git
 
 # Docker images (optional)
 dockers:
   - image_templates:
-      - "chrisloarryn/ccinit:latest"
-      - "chrisloarryn/ccinit:v{{ .Version }}"
-      - "chrisloarryn/ccinit:v{{ .Major }}"
-      - "chrisloarryn/ccinit:v{{ .Major }}.{{ .Minor }}"
+      - "chrisloarryn/ccin:latest"
+      - "chrisloarryn/ccin:v{{ .Version }}"
+      - "chrisloarryn/ccin:v{{ .Major }}"
+      - "chrisloarryn/ccin:v{{ .Major }}.{{ .Minor }}"
     dockerfile: Dockerfile
     use: buildx
     build_flag_templates:
@@ -236,8 +230,8 @@ announce:
   # Uncomment and configure if you want to announce releases
   # discord:
   #   enabled: true
-  #   message_template: 'New release of GOS CLI: {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}'
+  #   message_template: 'New release of ChrisLoarryn CLI: {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}'
   
   # slack:
   #   enabled: true
-  #   message_template: 'New release of GOS CLI: {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}'
+  #   message_template: 'New release of ChrisLoarryn CLI: {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}'
