@@ -1,0 +1,54 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+*.md
+docs/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+ccin
+*.exe
+dist/
+build/
+
+# CI/CD files
+.github/
+.goreleaser.yml
+
+# Test files
+*_test.go
+test/
+coverage.out
+
+# Temporary files
+*.tmp
+*.log
+
+# Node.js (if any)
+node_modules/
+npm-debug.log
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Examples and demos
+examples/
+demo/
+
+# License and contributing
+LICENSE
+CONTRIBUTING.md
+CHANGELOG.md

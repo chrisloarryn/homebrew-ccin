@@ -280,50 +280,50 @@ npm run build
 make dev
 ```
 
-## Patrones de Arquitectura
+## 🏗️ Architecture Patterns
 
-### Microservicios con gRPC
+### Microservices with gRPC
 
-Use gRPC para comunicación interna entre servicios:
+Use gRPC for internal communication between services:
 
 ```bash
-# Servicio Principal (API Gateway) - NestJS
-./ccin generate nestjs api-gateway --domain gateway --gcp-project my-services
+# Main Service (API Gateway) - NestJS
+ccin generate nestjs api-gateway --domain gateway --gcp-project my-services
 
-# Servicios Internos - Go con gRPC
-./ccin generate go-gin user-service --domain user --gcp-project my-services --grpc
-./ccin generate go-gin product-service --domain product --gcp-project my-services --grpc
-./ccin generate go-gin order-service --domain order --gcp-project my-services --grpc
+# Internal Services - Go with gRPC
+ccin generate go-gin user-service --domain user --gcp-project my-services --grpc
+ccin generate go-gin product-service --domain product --gcp-project my-services --grpc
+ccin generate go-gin order-service --domain order --gcp-project my-services --grpc
 ```
 
 ### Event-Driven Architecture
 
-Use Fiber para servicios de alta throughput:
+Use Fiber for high-throughput services:
 
 ```bash
 # Event Store
-./ccin generate go-fiber event-store --domain event --gcp-project event-system
+ccin generate go-fiber event-store --domain event --gcp-project event-system
 
 # Event Processors
-./ccin generate go-fiber order-processor --domain orderEvent --gcp-project event-system
-./ccin generate go-fiber payment-processor --domain paymentEvent --gcp-project event-system
+ccin generate go-fiber order-processor --domain orderEvent --gcp-project event-system
+ccin generate go-fiber payment-processor --domain paymentEvent --gcp-project event-system
 ```
 
 ### CQRS Pattern
 
-Separe comandos de consultas:
+Separate commands from queries:
 
 ```bash
-# Command Side (escritura)
-./ccin generate go-gin user-commands --domain userCommand --gcp-project cqrs-system --grpc
+# Command Side (write operations)
+ccin generate go-gin user-commands --domain userCommand --gcp-project cqrs-system --grpc
 
-# Query Side (lectura)
-./ccin generate go-fiber user-queries --domain userQuery --gcp-project cqrs-system
+# Query Side (read operations)
+ccin generate go-fiber user-queries --domain userQuery --gcp-project cqrs-system
 ```
 
-## Tips de Productividad
+## 🚀 Productivity Tips
 
-### Scripting Bulk Generation
+### Bulk Generation Scripts
 
 ```bash
 #!/bin/bash
@@ -333,27 +333,27 @@ DOMAIN="ecommerce-prod"
 
 echo "Generating E-commerce Microservices..."
 
-./ccin generate nestjs auth-service --domain auth --gcp-project $DOMAIN
-./ccin generate go-gin user-service --domain user --gcp-project $DOMAIN --grpc
-./ccin generate go-gin product-service --domain product --gcp-project $DOMAIN --grpc
-./ccin generate go-fiber order-service --domain order --gcp-project $DOMAIN
-./ccin generate go-gin inventory-service --domain inventory --gcp-project $DOMAIN --grpc
-./ccin generate nestjs notification-service --domain notification --gcp-project $DOMAIN
+ccin generate nestjs auth-service --domain auth --gcp-project $DOMAIN
+ccin generate go-gin user-service --domain user --gcp-project $DOMAIN --grpc
+ccin generate go-gin product-service --domain product --gcp-project $DOMAIN --grpc
+ccin generate go-fiber order-service --domain order --gcp-project $DOMAIN
+ccin generate go-gin inventory-service --domain inventory --gcp-project $DOMAIN --grpc
+ccin generate nestjs notification-service --domain notification --gcp-project $DOMAIN
 
 echo "✅ All services generated successfully!"
 ```
 
-### Environment Setup
+### Environment-Based Generation
 
 ```bash
 # Development
-./ccin generate nestjs my-api --domain item --gcp-project my-project-dev
+ccin generate nestjs my-api --domain item --gcp-project my-project-dev
 
 # Staging  
-./ccin generate nestjs my-api-staging --domain item --gcp-project my-project-staging
+ccin generate nestjs my-api-staging --domain item --gcp-project my-project-staging
 
 # Production
-./ccin generate nestjs my-api-prod --domain item --gcp-project my-project-prod
+ccin generate nestjs my-api-prod --domain item --gcp-project my-project-prod
 ```
 
 ## 📋 Framework Use Cases
@@ -403,4 +403,51 @@ ccin generate nestjs company-users-api --domain user
 ccin generate go-gin company-products-api --domain product
 ccin generate go-fiber company-orders-api --domain order
 ```
-- Cuando la velocidad es crítica
+
+## 🐳 Docker Examples
+
+### Using CCIN CLI with Docker
+
+```bash
+# Generate projects using Docker (no local Go installation needed)
+docker run --rm -it -v $(pwd)/output:/output ccin-cli:latest \
+  generate nestjs my-dockerized-api --domain user --gcp-project my-project
+
+# E-commerce microservices with Docker
+docker run --rm -it -v $(pwd)/ecommerce:/output ccin-cli:latest \
+  generate nestjs ecommerce-users --domain user --gcp-project ecommerce-prod
+
+docker run --rm -it -v $(pwd)/ecommerce:/output ccin-cli:latest \
+  generate go-gin ecommerce-products --domain product --gcp-project ecommerce-prod --grpc
+
+docker run --rm -it -v $(pwd)/ecommerce:/output ccin-cli:latest \
+  generate go-fiber ecommerce-orders --domain order --gcp-project ecommerce-prod
+```
+
+### Docker Compose Development
+
+```bash
+# Start development environment
+docker-compose up -d ccin-dev
+
+# Generate projects in development container
+docker-compose exec ccin-dev ccin generate nestjs my-api --domain user
+
+# Access the development container
+docker-compose exec ccin-dev sh
+
+# Clean up
+docker-compose down -v
+```
+
+### CI/CD Pipeline Examples
+
+```bash
+# GitHub Actions example
+docker run --rm -v $GITHUB_WORKSPACE:/workspace -w /workspace \
+  ccin-cli:latest generate nestjs ci-api --domain service
+
+# GitLab CI example  
+docker run --rm -v $CI_PROJECT_DIR:/workspace -w /workspace \
+  ccin-cli:latest generate go-gin pipeline-api --domain pipeline --grpc
+```

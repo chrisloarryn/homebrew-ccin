@@ -71,3 +71,32 @@ check: build ## Test basic CLI functionality
 	./$(BINARY_NAME) --help
 	./$(BINARY_NAME) generate --help
 	@echo "✅ CLI basic functionality test passed"
+
+# Docker commands
+docker-build: build ## Build Docker image (requires binary to be built first)
+	docker build -t ccin-cli:latest .
+	docker build -t ccin-cli:$(VERSION) .
+
+docker-build-all: clean build docker-build ## Clean, build binary and Docker image in one command
+
+docker-run: ## Run CLI in Docker container
+	docker run --rm -it -v $(PWD)/output:/output ccin-cli:latest
+
+docker-dev: ## Start development container
+	docker-compose up -d ccin-dev
+	docker-compose exec ccin-dev sh
+
+docker-test: ## Test CLI in Docker
+	docker run --rm ccin-cli:latest --version
+	docker run --rm ccin-cli:latest generate --help
+
+docker-clean: ## Clean Docker images and containers
+	docker-compose down -v
+	docker rmi ccin-cli:latest ccin-cli:$(VERSION) 2>/dev/null || true
+
+docker-push: docker-build ## Build and push to registry (requires REGISTRY env var)
+	@if [ -z "$(REGISTRY)" ]; then echo "REGISTRY environment variable required"; exit 1; fi
+	docker tag ccin-cli:latest $(REGISTRY)/ccin-cli:latest
+	docker tag ccin-cli:$(VERSION) $(REGISTRY)/ccin-cli:$(VERSION)
+	docker push $(REGISTRY)/ccin-cli:latest
+	docker push $(REGISTRY)/ccin-cli:$(VERSION)

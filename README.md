@@ -64,6 +64,19 @@ brew tap chrisloarryn/homebrew-ccin
 brew install ccin
 ```
 
+### From Docker
+
+```bash
+# Pull and run directly (when published)
+docker run --rm -it -v $(pwd)/output:/output ghcr.io/chrisloarryn/ccin:latest
+
+# Or build locally
+git clone https://github.com/chrisloarryn/homebrew-ccin
+cd homebrew-ccin
+make docker-build-all  # Builds binary + Docker image
+make docker-run
+```
+
 ### From source code
 
 ```bash

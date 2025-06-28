@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  ccin-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ccin-cli:latest
+    container_name: ccin-cli
+    volumes:
+      # Mount output directory for generated projects
+      - ./output:/output
+      # Mount current directory for development
+      - .:/workspace
+    working_dir: /workspace
+    # Override entrypoint for interactive use
+    entrypoint: ["/ccin"]
+    # Default to show help
+    command: ["--help"]
+    
+  # Development container with Go tools
+  ccin-dev:
+    image: golang:1.24.4-alpine
+    container_name: ccin-dev
+    volumes:
+      - .:/workspace
+      - go-modules:/go/pkg/mod
+    working_dir: /workspace
+    environment:
+      - CGO_ENABLED=0
+      - GOOS=linux
+    command: ["tail", "-f", "/dev/null"]
+    
+volumes:
+  go-modules:
