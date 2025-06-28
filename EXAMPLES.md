@@ -1,164 +1,282 @@
-# Ejemplos de Uso
+# CCIN CLI Usage Examples
 
-Esta guía muestra diferentes casos de uso del CLI ChrisLoarryn para generar aplicaciones CRUD.
+This guide shows different use cases of the enhanced CCIN CLI for generating production-ready CRUD applications with beautiful, colorized output.
 
-## Proyectos Básicos
+## 🚀 Getting Started
 
-### API Simple de Usuarios
-
-```bash
-# NestJS con MongoDB
-./ccin generate nestjs user-api --domain user --gcp-project my-project
-
-# Go Gin con PostgreSQL
-./ccin generate go-gin user-api --domain user --gcp-project my-project
-
-# Go Fiber con PostgreSQL
-./ccin generate go-fiber user-api --domain user --gcp-project my-project
-```
-
-## Proyecto E-commerce
-
-### Arquitectura de Microservicios
+### First Steps with Enhanced CLI
 
 ```bash
-# Servicio de Usuarios (NestJS)
-./ccin generate nestjs ecommerce-users --domain user --gcp-project ecommerce-prod
+# Beautiful help with colors and emojis
+ccin --help
 
-# Servicio de Productos (Go Gin + gRPC)
-./ccin generate go-gin ecommerce-products --domain product --gcp-project ecommerce-prod --grpc
+# Detailed version information 
+ccin --version
 
-# Servicio de Órdenes (Go Fiber)
-./ccin generate go-fiber ecommerce-orders --domain order --gcp-project ecommerce-prod
+# Framework overview with descriptions
+ccin generate --help
 
-# Servicio de Inventario (Go Gin + gRPC)
-./ccin generate go-gin ecommerce-inventory --domain inventory --gcp-project ecommerce-prod --grpc
-
-# Servicio de Notificaciones (NestJS)
-./ccin generate nestjs ecommerce-notifications --domain notification --gcp-project ecommerce-prod
+# Specific framework help
+ccin generate nestjs --help
 ```
 
-## Proyecto SaaS
+## 🎨 Enhanced CLI Features
 
-### Sistema de Gestión de Tareas
+### Colorized Help Output
 
 ```bash
-# API de Autenticación
-./ccin generate nestjs task-auth --domain auth --gcp-project task-saas-prod
-
-# API de Proyectos
-./ccin generate go-gin task-projects --domain project --gcp-project task-saas-prod --grpc
-
-# API de Tareas
-./ccin generate go-fiber task-management --domain task --gcp-project task-saas-prod
-
-# API de Reportes
-./ccin generate go-gin task-reports --domain report --gcp-project task-saas-prod
+# Beautiful main help with emojis and colors
+ccin --help
 ```
 
-## Proyecto IoT
+**Example Output:**
+```
+🎯 CCIN CLI - ChrisLoarryn's Comprehensive Code Integration & Initialization Tool
 
-### Plataforma de Sensores
+✨ Generate production-ready CRUD applications with multiple frameworks:
+   • NestJS (Node.js 24.2.0 + TypeScript + MongoDB)
+   • Go + Gin (REST/gRPC + PostgreSQL + Clean Architecture)
+   • Go + Fiber (Ultra-fast REST/gRPC + PostgreSQL)
+
+🎁 What you get:
+   ✅ Complete CRUD operations
+   ✅ Production-ready Docker configuration
+   ✅ GCP metrics & monitoring integration
+   ✅ Automated Makefiles for all workflows
+   ✅ API documentation (Swagger/OpenAPI)
+   ✅ Clean Architecture patterns
+   ✅ Template-based code generation
+
+🚀 Quick start: ccin generate --help
+```
+
+### Smart Error Handling
+
+The CLI provides intelligent validation with helpful suggestions:
 
 ```bash
-# API de Dispositivos
-./ccin generate go-fiber iot-devices --domain device --gcp-project iot-platform-prod
+# Project name too short
+ccin generate nestjs a
+# Output:
+# ❌ Invalid project name: project name must be at least 2 characters long
+# 💡 Use a descriptive name like 'my-api', 'user-service', etc.
 
-# API de Métricas (con gRPC para alta performance)
-./ccin generate go-gin iot-metrics --domain metric --gcp-project iot-platform-prod --grpc
+# Missing required argument
+ccin generate nestjs
+# Output:
+# ❌ Command Error: accepts 1 arg(s), received 0
+# 💡 Quick help: ccin --help or ccin generate --help
+# 📚 Documentation: https://github.com/chrisloarryn/homebrew-ccin
 
-# API de Alertas
-./ccin generate nestjs iot-alerts --domain alert --gcp-project iot-platform-prod
-
-# API de Configuración
-./ccin generate go-gin iot-config --domain config --gcp-project iot-platform-prod
+# Framework-specific validation
+ccin generate go-gin my-api
+# Output:
+# 🚀 Generating Go Gin CRUD project: my-api
+# 📊 Domain: item
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 📝 Processing templates...
+# ✅ Go Gin project 'my-api' generated successfully!
 ```
 
-## Proyecto FinTech
-
-### Sistema de Pagos
+### Version Information
 
 ```bash
-# API de Usuarios/Cuentas
-./ccin generate nestjs fintech-accounts --domain account --gcp-project fintech-prod
+ccin --version
+```
+**Output:**
+```
+🎯 CCIN CLI - ChrisLoarryn's Comprehensive Code Integration & Initialization Tool
+Version: 1.0.0
+Author: Chris Loarryn (@chrisloarryn)
+Repository: https://github.com/chrisloarryn/homebrew-ccin
 
-# API de Transacciones (alta performance con Fiber)
-./ccin generate go-fiber fintech-transactions --domain transaction --gcp-project fintech-prod
-
-# API de Análisis de Riesgo (con gRPC)
-./ccin generate go-gin fintech-risk --domain risk --gcp-project fintech-prod --grpc
-
-# API de Reportes Regulatorios
-./ccin generate go-gin fintech-compliance --domain compliance --gcp-project fintech-prod
+✨ Generate production-ready CRUD applications with modern frameworks!
 ```
 
-## Proyecto HealthTech
+## 📦 Basic Projects
 
-### Sistema de Gestión Médica
+### Simple User API
 
 ```bash
-# API de Pacientes
-./ccin generate nestjs health-patients --domain patient --gcp-project health-tech-prod
+# NestJS with MongoDB and enhanced output
+ccin generate nestjs user-api --domain user --gcp-project my-project
 
-# API de Citas Médicas
-./ccin generate go-gin health-appointments --domain appointment --gcp-project health-tech-prod
+# Go Gin with PostgreSQL  
+ccin generate go-gin user-api --domain user --gcp-project my-project
 
-# API de Expedientes (alta seguridad)
-./ccin generate go-fiber health-records --domain record --gcp-project health-tech-prod
-
-# API de Telemedicina (con gRPC para video)
-./ccin generate go-gin health-telemedicine --domain session --gcp-project health-tech-prod --grpc
+# Go Fiber with PostgreSQL (ultra-fast)
+ccin generate go-fiber user-api --domain user --gcp-project my-project
 ```
 
-## Comandos de Desarrollo
+**Example Enhanced Output:**
+```
+🚀 Generating NestJS CRUD project: user-api
+📊 Domain: user
+☁️  GCP Project: my-project
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 Processing templates...
+✅ NestJS project 'user-api' generated successfully!
 
-### Después de generar un proyecto
+🎯 Next steps:
+   cd user-api
+   npm install
+   npm run start:dev
+
+📚 Check the README.md for complete documentation
+```
+
+## 🛒 E-commerce Project
+
+### Microservices Architecture
+
+```bash
+# Users Service (NestJS with validation feedback)
+ccin generate nestjs ecommerce-users --domain user --gcp-project ecommerce-prod
+
+# Products Service (Go Gin + gRPC)
+ccin generate go-gin ecommerce-products --domain product --gcp-project ecommerce-prod --grpc
+
+# Orders Service (Go Fiber)
+ccin generate go-fiber ecommerce-orders --domain order --gcp-project ecommerce-prod
+
+# Inventory Service (Go Gin + gRPC)
+ccin generate go-gin ecommerce-inventory --domain inventory --gcp-project ecommerce-prod --grpc
+
+# Notifications Service (NestJS)
+ccin generate nestjs ecommerce-notifications --domain notification --gcp-project ecommerce-prod
+```
+
+## 💼 SaaS Project
+
+### Task Management System
+
+```bash
+# Authentication API with enhanced validation
+ccin generate nestjs task-auth --domain auth --gcp-project task-saas-prod
+
+# Projects API (Go Gin + gRPC for performance)
+ccin generate go-gin task-projects --domain project --gcp-project task-saas-prod --grpc
+
+# Task Management API (Ultra-fast Fiber)
+ccin generate go-fiber task-management --domain task --gcp-project task-saas-prod
+
+# Reports API
+ccin generate go-gin task-reports --domain report --gcp-project task-saas-prod
+```
+
+**Smart Input Validation Example:**
+```bash
+# Invalid project name - gets helpful feedback
+ccin generate nestjs a
+# Output: ❌ Invalid project name: project name must be at least 2 characters long
+#         💡 Use a descriptive name like 'my-api', 'user-service', etc.
+```
+
+## 🌐 IoT Project
+
+### Sensor Platform
+
+```bash
+# Device Management API (Fiber for speed)
+ccin generate go-fiber iot-devices --domain device --gcp-project iot-platform-prod
+
+# Metrics Collection API (Gin + gRPC for high performance)
+ccin generate go-gin iot-metrics --domain metric --gcp-project iot-platform-prod --grpc
+
+# Alerts Service (NestJS for complex logic)
+ccin generate nestjs iot-alerts --domain alert --gcp-project iot-platform-prod
+
+# Configuration API
+ccin generate go-gin iot-config --domain config --gcp-project iot-platform-prod
+```
+
+## 💰 FinTech Project
+
+### Payment System
+
+```bash
+# Accounts Management API (NestJS for complex business logic)
+ccin generate nestjs fintech-accounts --domain account --gcp-project fintech-prod
+
+# Transactions API (Fiber for high-performance processing)
+ccin generate go-fiber fintech-transactions --domain transaction --gcp-project fintech-prod
+
+# Risk Analysis API (Gin + gRPC for real-time processing)
+ccin generate go-gin fintech-risk --domain risk --gcp-project fintech-prod --grpc
+
+# Compliance Reports API
+ccin generate go-gin fintech-compliance --domain compliance --gcp-project fintech-prod
+```
+
+## 🏥 HealthTech Project
+
+### Medical Management System
+
+```bash
+# Patient Management API (NestJS for data validation)
+ccin generate nestjs health-patients --domain patient --gcp-project health-tech-prod
+
+# Appointments API (Go Gin for scheduling logic)
+ccin generate go-gin health-appointments --domain appointment --gcp-project health-tech-prod
+
+# Medical Records API (Fiber for high security performance)
+ccin generate go-fiber health-records --domain record --gcp-project health-tech-prod
+
+# Telemedicine API (Gin + gRPC for video streaming)
+ccin generate go-gin health-telemedicine --domain session --gcp-project health-tech-prod --grpc
+```
+
+## 🛠️ Development Commands
+
+### After generating a project
+
+Once you've generated your project with the enhanced CLI, use these commands:
 
 ```bash
 cd [project-name]
 
-# Configurar entorno
+# Setup environment
 make setup
 
-# Desarrollo local
+# Local development with live reload
 make dev
 
-# Ejecutar tests
+# Run tests
 make test
 
-# Construir para producción
+# Build for production
 make build
 
-# Construir imagen Docker
+# Build Docker image
 make docker-build
 
-# Desplegar a GCP
+# Deploy to GCP
 make deploy
 ```
 
-### Para proyectos Go con gRPC
+### For Go projects with gRPC
 
 ```bash
-# Instalar herramientas protobuf (primera vez)
+# Install protobuf tools (first time only)
 make proto-install
 
-# Generar código desde .proto
+# Generate code from .proto files
 make proto-gen
 
-# Construir proyecto
+# Build project
 make build
 ```
 
-### Para proyectos NestJS
+### For NestJS projects
 
 ```bash
-# Instalar dependencias
+# Install dependencies
 make install
 
-# Generar documentación Swagger
+# Generate Swagger documentation
 npm run build
 
-# Ejecutar en modo watch
+# Run in watch mode
 make dev
 ```
 
@@ -238,22 +356,51 @@ echo "✅ All services generated successfully!"
 ./ccin generate nestjs my-api-prod --domain item --gcp-project my-project-prod
 ```
 
-## Casos de Uso por Framework
+## 📋 Framework Use Cases
 
-### Cuándo usar NestJS
-- APIs complejas con muchas integraciones
-- Equipos familiarizados con TypeScript/Angular
-- Aplicaciones que requieren decoradores y DI
-- Prototipado rápido con TypeScript
+### When to use NestJS
+- ✅ Complex APIs with many integrations
+- ✅ Teams familiar with TypeScript/Angular
+- ✅ Applications requiring decorators and DI
+- ✅ Rapid prototyping with TypeScript
+- ✅ Rich ecosystem and enterprise features
 
-### Cuándo usar Go Gin
-- APIs de alto rendimiento
-- Microservicios con gRPC
-- Servicios de backend robustos
-- Cuando necesitas balance entre performance y facilidad
+### When to use Go Gin  
+- ✅ High-performance APIs
+- ✅ Microservices with gRPC
+- ✅ Robust backend services
+- ✅ Balance between performance and ease of use
+- ✅ Lightweight REST APIs
 
-### Cuándo usar Go Fiber
-- APIs de ultra-alta performance
-- Servicios con muchas conexiones concurrentes
-- Event processing
+### When to use Go Fiber
+- ✅ Ultra-high performance APIs
+- ✅ Services with many concurrent connections
+- ✅ Real-time event processing
+- ✅ Low-latency requirements
+- ✅ Express.js-like API in Go
+
+## 🎯 Pro Tips
+
+### Enhanced CLI Usage
+```bash
+# Use tab completion for better experience
+ccin generate [TAB][TAB]
+
+# Check version and features regularly
+ccin --version
+
+# Use descriptive project names for better organization
+ccin generate nestjs user-management-service --domain user
+
+# Take advantage of the colorized output for better readability
+ccin generate go-gin --help | less -R
+```
+
+### Project Organization
+```bash
+# Use consistent naming conventions
+ccin generate nestjs company-users-api --domain user
+ccin generate go-gin company-products-api --domain product
+ccin generate go-fiber company-orders-api --domain order
+```
 - Cuando la velocidad es crítica

@@ -2,7 +2,7 @@
 
 .PHONY: help build install clean test demo
 
-BINARY_NAME=chrisloarryn-cli
+BINARY_NAME=ccin
 VERSION=$(shell git rev-parse --short HEAD 2>/dev/null || echo "dev")
 LDFLAGS=-ldflags "-X main.Version=$(VERSION)"
 

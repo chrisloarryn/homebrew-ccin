@@ -3,7 +3,7 @@
 
 version: 2
 
-project_name: chrisloarryn-cli
+project_name: ccin
 
 before:
   hooks:

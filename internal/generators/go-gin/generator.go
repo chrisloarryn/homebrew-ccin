@@ -3,7 +3,7 @@ package gogin
 import (
 	"fmt"
 
-	"github.com/chrisloarryn/chrisloarryn-cli/internal/common"
+	"github.com/chrisloarryn/ccin/internal/common"
 )
 
 // Generator implements the Go Gin generator

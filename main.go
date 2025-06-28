@@ -1,6 +1,6 @@
 package main
 
-import "github.com/chrisloarryn/chrisloarryn-cli/cmd"
+import "github.com/chrisloarryn/ccin/cmd"
 
 func main() {
 	cmd.Execute()
