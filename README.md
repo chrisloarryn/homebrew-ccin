@@ -44,11 +44,11 @@ go run main.go [command]
 
 - 🚀 **Modular Architecture**: Interchangeable generator system with automatic registration
 - 📝 **Template Engine**: Intelligent template processing with dynamic variables
-- 🎯 **Multiple Frameworks**: NestJS (Node.js 24.2.0), Go 1.25.1 (Gin), Go 1.25.1 (Fiber), Swift 6.1.2 (Vapor 4)
+- 🎯 **Multiple Frameworks**: NestJS (Node.js 24.2.0), Go 1.25.1 (Gin), Go 1.25.1 (Fiber), Swift 6.1.2 (Vapor 4), Rust (Axum and Tonic)
 - 📊 **GCP Integration**: Automatic metrics and logging for Google Cloud Platform
 - 🐳 **Docker Ready**: Multi-stage Dockerfiles optimized for production
 - 📚 **API Documentation**: Automatic Swagger/OpenAPI generation
-- 🔄 **gRPC Support**: Optional gRPC communication support for Go projects
+- 🔄 **gRPC Support**: Optional gRPC communication support for Go and Rust projects
 - 🏗️ **Clean Architecture**: DDD patterns and best practices implemented
 - 📦 **Dynamic Templates**: Paths and file names with variable substitution
 - ⚡ **Automatic Makefile**: Build, test and deploy commands for each framework
@@ -75,6 +75,11 @@ go run main.go [command]
   Example:
   ```bash
   ccin generate swift-vapor catalog-api --domain product --grpc
+  ```
+- rust-axum — Rust (Axum for REST and Tonic for gRPC) on Tokio/Hyper/Tower, Clean Architecture
+  Example:
+  ```bash
+  ccin generate rust-axum my-rust-api --domain user --grpc
   ```
 
 ## Installation

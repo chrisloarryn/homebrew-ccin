@@ -13,6 +13,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.12] - 2025-09-08
+### Changed
+- Bumped patch version to 0.0.12.
+- Updated Homebrew cask URLs to v0.0.12.
+- README: Documented new rust-axum template and clarified gRPC support for Go and Rust.
+
 ## [0.0.11] - 2025-09-08
 ### Added
 - CHANGELOG.md file following Keep a Changelog best practices.
