@@ -1,5 +1,5 @@
 # Build stage
-FROM node:24.2.0-alpine3.22 AS builder
+FROM node:24.7.0-alpine3.22 AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
-FROM node:24.2.0-alpine3.22 AS development
+FROM node:24.7.0-alpine3.22 AS development
 
 WORKDIR /app
 

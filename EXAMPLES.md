@@ -34,7 +34,7 @@ ccin --help
 🎯 CCIN CLI - ChrisLoarryn's Comprehensive Code Integration & Initialization Tool
 
 ✨ Generate production-ready CRUD applications with multiple frameworks:
-   • NestJS (Node.js 24.2.0 + TypeScript + MongoDB)
+  • NestJS (Node.js 24.7.0 + TypeScript + MongoDB)
    • Go + Gin (REST/gRPC + PostgreSQL + Clean Architecture)
    • Go + Fiber (Ultra-fast REST/gRPC + PostgreSQL)
 
@@ -450,4 +450,39 @@ docker run --rm -v $GITHUB_WORKSPACE:/workspace -w /workspace \
 # GitLab CI example  
 docker run --rm -v $CI_PROJECT_DIR:/workspace -w /workspace \
   ccin-cli:latest generate go-gin pipeline-api --domain pipeline --grpc
+```
+
+
+
+## 🐦 Swift Vapor Quickstart
+
+### Basic Vapor API
+```bash
+# Swift Vapor with clean REST layers
+ccin generate swift-vapor catalog-api --domain product
+
+cd catalog-api
+swift build
+swift run Run
+```
+
+### With gRPC Scaffolding
+```bash
+# Generate with gRPC placeholders and proto file
+ccin generate swift-vapor catalog-api --domain product --grpc
+
+# After generation, generate Swift stubs (requires protoc + grpc-swift)
+# protoc \
+#   --swift_out=./Sources/App/GRPC \
+#   --swift-grpc_out=./Sources/App/GRPC \
+#   Proto/product.proto
+```
+
+### Docker
+```bash
+make docker-build
+make docker-run
+# or
+# docker build -t catalog-api .
+# docker run -p 8080:8080 -p 50051:50051 catalog-api
 ```

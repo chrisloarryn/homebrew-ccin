@@ -1,5 +1,5 @@
 # Multi-stage build for Go Gin application
-FROM golang:1.24.4-alpine AS builder
+FROM golang:1.25.1-alpine AS builder
 
 # Install git and ca-certificates (needed for go mod download)
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates

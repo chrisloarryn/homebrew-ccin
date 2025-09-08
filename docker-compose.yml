@@ -10,7 +10,7 @@ services:
     volumes:
       # Mount output directory for generated projects
       - ./output:/output
-      # Mount current directory for development
+      # Mount the current directory for development
       - .:/workspace
     working_dir: /workspace
     # Override entrypoint for interactive use
@@ -20,7 +20,7 @@ services:
     
   # Development container with Go tools
   ccin-dev:
-    image: golang:1.24.4-alpine
+    image: golang:1.25.1-alpine3.22
     container_name: ccin-dev
     volumes:
       - .:/workspace

@@ -44,7 +44,7 @@ go run main.go [command]
 
 - 🚀 **Modular Architecture**: Interchangeable generator system with automatic registration
 - 📝 **Template Engine**: Intelligent template processing with dynamic variables
-- 🎯 **Multiple Frameworks**: NestJS (Node.js 24.2.0), Go with Gin, Go with Fiber
+- 🎯 **Multiple Frameworks**: NestJS (Node.js 24.2.0), Go 1.25.1 (Gin), Go 1.25.1 (Fiber), Swift 6.1.2 (Vapor 4)
 - 📊 **GCP Integration**: Automatic metrics and logging for Google Cloud Platform
 - 🐳 **Docker Ready**: Multi-stage Dockerfiles optimized for production
 - 📚 **API Documentation**: Automatic Swagger/OpenAPI generation
@@ -53,6 +53,29 @@ go run main.go [command]
 - 📦 **Dynamic Templates**: Paths and file names with variable substitution
 - ⚡ **Automatic Makefile**: Build, test and deploy commands for each framework
 - 🔧 **Registry Pattern**: Extensible system for adding new generators
+
+## Available Templates
+
+- nestjs — NestJS (Node.js 24.2.0 + TypeScript + MongoDB)
+  Example:
+  ```bash
+  ccin generate nestjs my-api --domain user --gcp-project my-project
+  ```
+- go-gin — Go 1.25.1 + Gin (REST/gRPC + PostgreSQL + Clean Architecture)
+  Example:
+  ```bash
+  ccin generate go-gin orders-api --domain order --grpc
+  ```
+- go-fiber — Go 1.25.1 + Fiber (Ultra-fast REST/gRPC + PostgreSQL)
+  Example:
+  ```bash
+  ccin generate go-fiber products-api --domain product --gcp-project prod
+  ```
+- swift-vapor — Swift 6.1.2 + Vapor 4 (REST + optional gRPC)
+  Example:
+  ```bash
+  ccin generate swift-vapor catalog-api --domain product --grpc
+  ```
 
 ## Installation
 
@@ -114,6 +137,7 @@ ccin generate --help
 ccin generate nestjs --help
 ccin generate go-gin --help  
 ccin generate go-fiber --help
+ccin generate swift-vapor --help
 ```
 
 ### Smart Input Validation
@@ -173,8 +197,8 @@ ccin generate nestjs simple-api --domain item
 
 ✨ Generate production-ready CRUD applications with multiple frameworks:
    • NestJS (Node.js 24.2.0 + TypeScript + MongoDB)
-   • Go + Gin (REST/gRPC + PostgreSQL + Clean Architecture)  
-   • Go + Fiber (Ultra-fast REST/gRPC + PostgreSQL)
+   • Go 1.25.1 + Gin (REST/gRPC + PostgreSQL + Clean Architecture)  
+   • Go 1.25.1 + Fiber (Ultra-fast REST/gRPC + PostgreSQL)
 
 🎁 What you get:
    ✅ Complete CRUD operations
@@ -265,10 +289,10 @@ my-nestjs-api/
             └── [domain].module.ts
 ```
 
-### Go with Gin (Go 1.24.4)
+### Go with Gin (Go 1.25.1)
 
 Generates a complete project with:
-- ✅ **Runtime**: Go 1.24.4 with Gin framework
+- ✅ **Runtime**: Go 1.25.1 with a Gin framework
 - ✅ **Database**: PostgreSQL with standard SQL
 - ✅ **API**: REST endpoints with JSON responses
 - ✅ **gRPC**: Optional support for gRPC communication
@@ -307,10 +331,10 @@ my-gin-api/
         └── metrics.go             # GCP metrics client
 ```
 
-### Go with Fiber (Go 1.24.4)
+### Go with Fiber (Go 1.25.1)
 
 Generates a complete project with:
-- ✅ **Runtime**: Go 1.24.4 with Fiber framework (ultra-fast)
+- ✅ **Runtime**: Go 1.25.1 with Fiber framework (ultra-fast)
 - ✅ **Performance**: Framework optimized for speed
 - ✅ **Database**: PostgreSQL with standard SQL
 - ✅ **API**: REST endpoints with fast JSON responses
@@ -718,3 +742,48 @@ MIT License - see [LICENSE](LICENSE) file for more details.
 ---
 
 Questions or suggestions? Open an issue! 🚀
+
+
+
+### Swift Vapor (Swift 5/6, Vapor 4)
+
+Generates a complete project with:
+- ✅ Framework: Swift Vapor 4
+- ✅ Runtime: Swift 5.10+ (macOS 13+/Ubuntu 22.04)
+- ✅ API: REST endpoints with clean layers (Controllers/Services/Models)
+- ✅ gRPC: Optional scaffolding (Proto + placeholders)
+- ✅ Health: Built-in health check endpoint
+- ✅ Container: Optimized multi-stage Dockerfile
+- ✅ Build Tools: Makefile with handy commands
+- ✅ Observability: Simple MetricsMiddleware for request timing logs
+
+Example generation command:
+```bash
+ccin generate swift-vapor catalog-api --domain product --grpc
+```
+
+Project Structure:
+```
+catalog-api/
+├── Package.swift                     # SwiftPM manifest
+├── Sources/
+│   ├── App/
+│   │   ├── Controllers/             # HTTP controllers
+│   │   ├── Middleware/              # Middlewares (Metrics, etc.)
+│   │   ├── Models/                  # Domain models (Codable)
+│   │   ├── Services/                # Business logic services
+│   │   ├── GRPC/                    # (Optional with --grpc) gRPC placeholders
+│   │   ├── configure.swift          # App configuration & bootstrap
+│   │   └── routes.swift             # Routes registration
+│   └── Run/
+│       └── main.swift               # Entry point
+├── Proto/                            # (Optional with --grpc) Proto definitions
+│   └── product.proto
+├── Dockerfile                        # Multi-stage Docker build
+├── Makefile                          # Build & run helpers
+└── README.md                         # Project documentation
+```
+
+Notes:
+- The template uses in-memory storage for simplicity. Swap for a persistence layer (e.g., Fluent + PostgreSQL) as needed.
+- gRPC requires generating Swift stubs from the included proto; see the project README for commands and setup.

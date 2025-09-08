@@ -16,6 +16,10 @@ A Go CRUD API built with Fiber framework.
 - ✅ Docker support
 - ✅ Environment configuration
 
+## Prerequisites
+
+- Go 1.25.1+
+
 ## Quick Start
 
 1. **Clone and setup**

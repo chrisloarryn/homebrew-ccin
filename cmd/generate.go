@@ -4,48 +4,50 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/fatih/color"
 	"github.com/chrisloarryn/ccin/internal/common"
-	_ "github.com/chrisloarryn/ccin/internal/generators/nestjs"
-	_ "github.com/chrisloarryn/ccin/internal/generators/go-gin"
 	_ "github.com/chrisloarryn/ccin/internal/generators/go-fiber"
+	_ "github.com/chrisloarryn/ccin/internal/generators/go-gin"
+	_ "github.com/chrisloarryn/ccin/internal/generators/nestjs"
+	_ "github.com/chrisloarryn/ccin/internal/generators/swift-vapor"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
 // Constants for repeated strings to reduce duplication
 const (
 	defaultDomain = "item"
-	
+
 	// Flag names
-	flagDomain = "domain"
+	flagDomain     = "domain"
 	flagGCPProject = "gcp-project"
-	flagGRPC = "grpc"
-	
+	flagGRPC       = "grpc"
+
 	// Generator names
-	generatorNestJS = "nestjs"
-	generatorGoGin = "go-gin"
-	generatorGoFiber = "go-fiber"
-	
+	generatorNestJS     = "nestjs"
+	generatorGoGin      = "go-gin"
+	generatorGoFiber    = "go-fiber"
+	generatorSwiftVapor = "swift-vapor"
+
 	// Error messages
-	errorGeneratorNotFound = "❌ Generator Error: %v\n"
-	errorGeneration = "❌ Generation Error: %v\n"
+	errorGeneratorNotFound  = "❌ Generator Error: %v\n"
+	errorGeneration         = "❌ Generation Error: %v\n"
 	errorInvalidProjectName = "❌ Invalid project name: %v\n"
-	
+
 	// Help messages
-	helpAvailableGenerators = "💡 Available generators: nestjs, go-gin, go-fiber"
-	helpCheckTemplates = "💡 Check that all template files exist and are accessible"
-	
+	helpAvailableGenerators = "💡 Available generators: nestjs, go-gin, go-fiber, swift-vapor"
+	helpCheckTemplates      = "💡 Check that all template files exist and are accessible"
+
 	// Info messages
 	msgProcessingTemplates = "📝 Processing templates..."
-	nextStepsHeader = "\n🎯 Next steps:"
-	readmeNote = "\n📚 Check the README.md for complete documentation"
-	whatYouGetHeader = "🎯 What you'll get:\n"
-	exampleHeader = "📋 Example: "
-	domainLabel = "📊 Domain: "
-	gcpProjectLabel = "☁️  GCP Project: "
-	grpcEnabledMsg = "🔗 gRPC support enabled"
-	cdCommand = "   cd %s\n"
-	
+	nextStepsHeader        = "\n🎯 Next steps:"
+	readmeNote             = "\n📚 Check the README.md for complete documentation"
+	whatYouGetHeader       = "🎯 What you'll get:\n"
+	exampleHeader          = "📋 Example: "
+	domainLabel            = "📊 Domain: "
+	gcpProjectLabel        = "☁️  GCP Project: "
+	grpcEnabledMsg         = "🔗 gRPC support enabled"
+	cdCommand              = "   cd %s\n"
+
 	// Visual elements
 	separatorLine = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 )
@@ -58,11 +60,13 @@ var generateCmd = &cobra.Command{
 		color.New(color.FgGreen).Sprint("🎯 Available Frameworks:\n") +
 		color.New(color.FgYellow).Sprint("   📦 nestjs") + color.New(color.FgHiBlack).Sprint("   - NestJS with TypeScript, MongoDB, Swagger, Jest\n") +
 		color.New(color.FgYellow).Sprint("   🟢 go-gin") + color.New(color.FgHiBlack).Sprint("  - Go with Gin framework, PostgreSQL, REST/gRPC\n") +
-		color.New(color.FgYellow).Sprint("   ⚡ go-fiber") + color.New(color.FgHiBlack).Sprint(" - Go with Fiber framework (ultra-fast), PostgreSQL, REST/gRPC\n\n") +
+		color.New(color.FgYellow).Sprint("   ⚡ go-fiber") + color.New(color.FgHiBlack).Sprint(" - Go with Fiber framework (ultra-fast), PostgreSQL, REST/gRPC\n") +
+		color.New(color.FgYellow).Sprint("   🐦 swift-vapor") + color.New(color.FgHiBlack).Sprint(" - Swift with Vapor framework, REST/gRPC\n\n") +
 		color.New(color.FgMagenta).Sprint("💡 Examples:\n") +
 		color.New(color.FgHiBlack).Sprint("   ccin generate nestjs my-api --domain user --gcp-project my-project\n") +
 		color.New(color.FgHiBlack).Sprint("   ccin generate go-gin orders-api --domain order --grpc\n") +
-		color.New(color.FgHiBlack).Sprint("   ccin generate go-fiber products-api --domain product --gcp-project prod\n\n") +
+		color.New(color.FgHiBlack).Sprint("   ccin generate go-fiber products-api --domain product --gcp-project prod\n") +
+		color.New(color.FgHiBlack).Sprint("   ccin generate swift-vapor catalog-api --domain product --grpc\n\n") +
 		color.New(color.FgCyan).Sprint("🔧 Use: ") + color.New(color.FgWhite, color.Bold).Sprint("ccin generate <framework> <project-name> [flags]"),
 	Aliases: []string{"gen", "g"},
 }
@@ -84,24 +88,24 @@ var nestjsCmd = &cobra.Command{
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		projectName := args[0]
-		
+
 		// Validate project name
 		if err := validateProjectName(projectName); err != nil {
 			color.New(color.FgRed, color.Bold).Printf(errorInvalidProjectName, err)
 			color.New(color.FgYellow).Println("💡 Use a descriptive name like 'my-api', 'user-service', etc.")
 			return
 		}
-		
+
 		domainName, _ := cmd.Flags().GetString(flagDomain)
 		gcpProject, _ := cmd.Flags().GetString(flagGCPProject)
-		
+
 		if domainName == "" {
 			domainName = defaultDomain
 		}
-		
+
 		// Print header
 		printProjectHeader("NestJS", projectName, domainName, gcpProject, false)
-		
+
 		// Get generator
 		generator, err := common.Registry.Get(generatorNestJS)
 		if err != nil {
@@ -127,7 +131,7 @@ var nestjsCmd = &cobra.Command{
 			handleGenerationError(err)
 			return
 		}
-		
+
 		// Success message
 		printSuccessMessage("NestJS", projectName, []string{"npm install", "npm run start:dev"})
 	},
@@ -139,7 +143,7 @@ var goGinCmd = &cobra.Command{
 	Short: "🟢 Generate Go Gin CRUD application",
 	Long: color.New(color.FgGreen, color.Bold).Sprint("🟢 GO GIN GENERATOR\n\n") +
 		color.New(color.FgGreen).Sprint(whatYouGetHeader) +
-		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Go 1.24.4") + color.New(color.FgHiBlack).Sprint(" with Gin framework\n") +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Go 1.25.1") + color.New(color.FgHiBlack).Sprint(" with Gin framework\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("PostgreSQL") + color.New(color.FgHiBlack).Sprint(" with GORM\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("REST API") + color.New(color.FgHiBlack).Sprint(" with JSON responses\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("gRPC") + color.New(color.FgHiBlack).Sprint(" support (optional with --grpc)\n") +
@@ -150,25 +154,25 @@ var goGinCmd = &cobra.Command{
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		projectName := args[0]
-		
+
 		// Validate project name
 		if err := validateProjectName(projectName); err != nil {
 			color.New(color.FgRed, color.Bold).Printf(errorInvalidProjectName, err)
 			color.New(color.FgYellow).Println("💡 Use a descriptive name like 'orders-api', 'inventory-service', etc.")
 			return
 		}
-		
+
 		domainName, _ := cmd.Flags().GetString(flagDomain)
 		gcpProject, _ := cmd.Flags().GetString(flagGCPProject)
 		grpc, _ := cmd.Flags().GetBool(flagGRPC)
-		
+
 		if domainName == "" {
 			domainName = defaultDomain
 		}
-		
+
 		// Print header
 		printProjectHeader("Go Gin", projectName, domainName, gcpProject, grpc)
-		
+
 		// Get generator
 		generator, err := common.Registry.Get(generatorGoGin)
 		if err != nil {
@@ -194,7 +198,7 @@ var goGinCmd = &cobra.Command{
 			handleGenerationError(err)
 			return
 		}
-		
+
 		// Success message
 		printSuccessMessage("Go Gin", projectName, []string{"go mod tidy", "make dev"})
 	},
@@ -206,7 +210,7 @@ var goFiberCmd = &cobra.Command{
 	Short: "⚡ Generate Go Fiber CRUD application",
 	Long: color.New(color.FgYellow, color.Bold).Sprint("⚡ GO FIBER GENERATOR\n\n") +
 		color.New(color.FgGreen).Sprint(whatYouGetHeader) +
-		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Go 1.24.4") + color.New(color.FgHiBlack).Sprint(" with Fiber framework (ultra-fast!)\n") +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Go 1.25.1") + color.New(color.FgHiBlack).Sprint(" with Fiber framework (ultra-fast!)\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("PostgreSQL") + color.New(color.FgHiBlack).Sprint(" with GORM\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("REST API") + color.New(color.FgHiBlack).Sprint(" with lightning-fast JSON responses\n") +
 		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("gRPC") + color.New(color.FgHiBlack).Sprint(" support (optional with --grpc)\n") +
@@ -217,25 +221,25 @@ var goFiberCmd = &cobra.Command{
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		projectName := args[0]
-		
+
 		// Validate project name
 		if err := validateProjectName(projectName); err != nil {
 			color.New(color.FgRed, color.Bold).Printf(errorInvalidProjectName, err)
 			color.New(color.FgYellow).Println("💡 Use a descriptive name like 'products-api', 'notification-service', etc.")
 			return
 		}
-		
+
 		domainName, _ := cmd.Flags().GetString(flagDomain)
 		gcpProject, _ := cmd.Flags().GetString(flagGCPProject)
 		grpc, _ := cmd.Flags().GetBool(flagGRPC)
-		
+
 		if domainName == "" {
 			domainName = defaultDomain
 		}
-		
+
 		// Print header
 		printProjectHeader("Go Fiber", projectName, domainName, gcpProject, grpc)
-		
+
 		// Get generator
 		generator, err := common.Registry.Get(generatorGoFiber)
 		if err != nil {
@@ -261,9 +265,73 @@ var goFiberCmd = &cobra.Command{
 			handleGenerationError(err)
 			return
 		}
-		
+
 		// Success message
 		printSuccessMessage("Go Fiber", projectName, []string{"go mod tidy", "make dev"})
+	},
+}
+
+// swiftVaporCmd generates Swift Vapor CRUD
+var swiftVaporCmd = &cobra.Command{
+	Use:   "swift-vapor [project-name]",
+	Short: "🐦 Generate Swift Vapor backend (REST + gRPC)",
+	Long: color.New(color.FgBlue, color.Bold).Sprint("🐦 SWIFT VAPOR GENERATOR\n\n") +
+		color.New(color.FgGreen).Sprint(whatYouGetHeader) +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Swift 6.1.2") + color.New(color.FgHiBlack).Sprint(" with Vapor 4 framework\n") +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("REST API") + color.New(color.FgHiBlack).Sprint(" with clean architecture layers (Controllers/Services/Models)\n") +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("gRPC") + color.New(color.FgHiBlack).Sprint(" scaffolding (optional with --grpc)\n") +
+		color.New(color.FgYellow).Sprint("   • ") + color.New(color.FgWhite).Sprint("Docker") + color.New(color.FgHiBlack).Sprint(" multi-stage production build\n\n") +
+		color.New(color.FgCyan).Sprint(exampleHeader) + color.New(color.FgWhite, color.Bold).Sprint("ccin generate swift-vapor catalog-api --domain product --grpc"),
+	Args: cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		projectName := args[0]
+
+		// Validate project name
+		if err := validateProjectName(projectName); err != nil {
+			color.New(color.FgRed, color.Bold).Printf(errorInvalidProjectName, err)
+			color.New(color.FgYellow).Println("💡 Use a descriptive name like 'catalog-api', 'payment-service', etc.")
+			return
+		}
+
+		domainName, _ := cmd.Flags().GetString(flagDomain)
+		gcpProject, _ := cmd.Flags().GetString(flagGCPProject)
+		grpc, _ := cmd.Flags().GetBool(flagGRPC)
+
+		if domainName == "" {
+			domainName = defaultDomain
+		}
+
+		// Print header
+		printProjectHeader("Swift Vapor", projectName, domainName, gcpProject, grpc)
+
+		// Get generator
+		generator, err := common.Registry.Get(generatorSwiftVapor)
+		if err != nil {
+			handleGeneratorError(generatorSwiftVapor, err)
+			return
+		}
+
+		// Prepare configuration
+		config := &common.GeneratorConfig{
+			ProjectName:  projectName,
+			DomainName:   domainName,
+			GCPProject:   gcpProject,
+			OutputDir:    projectName,
+			TemplateDir:  filepath.Join("templates", generatorSwiftVapor),
+			WithGRPC:     grpc,
+			DatabaseType: "none",
+			Port:         "8080",
+		}
+
+		// Generate project
+		color.New(color.FgBlue).Println(msgProcessingTemplates)
+		if err := generator.Generate(config); err != nil {
+			handleGenerationError(err)
+			return
+		}
+
+		// Success message
+		printSuccessMessage("Swift Vapor", projectName, []string{"swift build", "swift run"})
 	},
 }
 
@@ -321,14 +389,16 @@ func init() {
 	generateCmd.AddCommand(nestjsCmd)
 	generateCmd.AddCommand(goGinCmd)
 	generateCmd.AddCommand(goFiberCmd)
+	generateCmd.AddCommand(swiftVaporCmd)
 
 	// Add flags for all generate commands
-	for _, cmd := range []*cobra.Command{nestjsCmd, goGinCmd, goFiberCmd} {
+	for _, cmd := range []*cobra.Command{nestjsCmd, goGinCmd, goFiberCmd, swiftVaporCmd} {
 		cmd.Flags().StringP(flagDomain, "d", "", "Domain name for the service (e.g., user, product, order)")
 		cmd.Flags().StringP(flagGCPProject, "p", "", "GCP Project ID for metrics integration")
 	}
 
-	// Add gRPC flag for Go commands
+	// Add gRPC flag for Go and Swift Vapor commands
 	goGinCmd.Flags().BoolP(flagGRPC, "g", false, "Include gRPC support")
 	goFiberCmd.Flags().BoolP(flagGRPC, "g", false, "Include gRPC support")
+	swiftVaporCmd.Flags().BoolP(flagGRPC, "g", false, "Include gRPC support")
 }
