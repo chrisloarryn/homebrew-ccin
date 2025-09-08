@@ -13,9 +13,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.10] - 2025-09-07
+## [0.0.11] - 2025-09-08
 ### Added
 - CHANGELOG.md file following Keep a Changelog best practices.
+- New Swift Vapor generator registered in the global registry with initial templates (Package.swift.tpl, README.md.tpl), supporting REST with Vapor and optional gRPC via SwiftGRPC.
+- New Rust Axum generator registered in the global registry with initial templates (Cargo.toml.tpl, README.md.tpl), supporting REST with Axum and optional gRPC via Tonic.
 
 ### Changed
 - Updated NestJS template to use Node.js 24.7.0 (alpine3.22) and added `.nvmrc` for version consistency.
